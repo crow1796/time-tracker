@@ -7,3 +7,17 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+#nprogress {
+  position: relative;
+  z-index: 9999999;
+}
+
+#nprogress .bar{
+	background: #30b34d;
+}
+
+#nprogress .spinner-icon{
+	border-top-color: #30b34d;
+	border-left-color: #30b34d;
+}
