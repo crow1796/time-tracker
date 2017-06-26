@@ -9,7 +9,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
 	state: {
-		testVar: 'test'
+		isLoggedIn: false
 	},
 	getters,
 	mutations,

@@ -8,13 +8,31 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import VueRouter from 'vue-router';
+window.Timer = require('easytimer');
 import NProgress from 'nprogress';
+import VueRouter from 'vue-router';
+import Buefy from 'buefy';
+import 'buefy/lib/buefy.css';
 import { store } from './store/store';
 import { router } from './router';
+import vueinterval from 'vue-interval';
+import filters from './filters';
+
 Vue.use(VueRouter);
+Vue.use(Buefy);
 
 import App from './views/App.vue';
+require('./components');
+
+axios.interceptors.response.use((config) => {
+	NProgress.start();
+	const authToken = store.getters.userToken;
+	config.headers.Authorization = `Bearer ${authToken}`;
+
+	next((response) => {
+		NProgress.done();
+	});
+});
 
 // Vue.http.interceptors.push((request, next) => {
 // 	NProgress.start();
@@ -32,16 +50,6 @@ import App from './views/App.vue';
 //     	}
 //     });
 // });
-
-router.beforeEach((to, from, next) => {
-	NProgress.start();
-	next();
-});
-
-router.afterEach((to, from) => {
-	sessionStorage.setItem('previousLink', from.fullPath);
-	NProgress.done();
-});
 
 const app = new Vue({
     el: '#app',

@@ -3,7 +3,8 @@
 		data(){
 			return {
 				email: null,
-				password: null
+				password: null,
+				remember: false
 			};
 		},
 		methods: {
@@ -16,43 +17,45 @@
 
 <template>
 	<div id="login">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div class="panel panel-default" id="login-form">
-						<form @submit.prevent="loginUser">
-							<div class="panel-heading">
-								<h4>Login</h4>
-							</div>
-							<div class="panel-body">
-								<div class="form-group">
-									<label for="email" class="control-label">E-mail Address:</label>
-									<input type="email" id="email" name="email" class="form-control" placeholder="Enter your E-mail Address" v-model="email">
-								</div>
-								<div class="form-group">
-									<label for="password" class="control-label">Password:</label>
-									<input type="password" id="password" name="password" class="form-control" placeholder="Enter your Password" v-model="password">
-								</div>
-								<div class="form-group">
-									<label for="remember">
-										<input type="checkbox" name="remember" id="remember"> Remember Me?
-									</label>
-								</div>
-								<div class="form-group text-right">
-									<router-link to="/forgot-password">Forgot Password?</router-link>
-								</div>
-							</div>
-							<div class="panel-footer text-right">
-								<router-link to="/register" class="pull-left">Don't have an account?</router-link>
-								<button type="submit" class="btn btn-md btn-primary">
-									Login
-								</button>
-							</div>
-						</form>
+		<form class="box" id="login-form" @submit.prevent="loginUser">
+			<h3 class="title is-3">Login</h3>
+			<b-field label="E-mail Address:">
+			    <b-input placeholder="Enter your E-mail Address" v-model="email"></b-input>
+			</b-field>
+			<b-field label="Password">
+			    <b-input type="password"
+			        placeholder="Enter your Password" 
+			        v-model="password"
+			        password-reveal>
+			    </b-input>
+			</b-field>
+			<div class="block level">
+			    <div class="level-left">
+			    	<div class="level-item">
+			    		<b-checkbox v-model="remember">Remember Me?</b-checkbox>
+			    	</div>
+			    </div>
+				<div class="level-right">
+					<div class="level-item">
+						<router-link to="/forgot-password">Forgot Password?</router-link>
 					</div>
 				</div>
 			</div>
-		</div>
+			<div class="level">
+				<div class="level-left">
+					<div class="level-item">
+						<router-link to="/register">Create an account</router-link>
+					</div>
+				</div>
+				<div class="level-right">
+					<div class="level-item">
+						<button type="submit" class="button is-primary">
+							Login
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 </template>
 

@@ -3,7 +3,8 @@
 		data(){
 			return {
 				email: null,
-				password: null
+				password: null,
+				password_confirmation: null
 			};
 		},
 		methods: {
@@ -12,41 +13,48 @@
 </script>
 
 <template>
-	<div id="login">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3">
-					<div class="panel panel-default" id="register">
-						<form @submit.prevent="">
-							<div class="panel-heading">
-								<h4>Register</h4>
-							</div>
-							<div class="panel-body">
-								<div class="form-group">
-									<label for="email" class="control-label">E-mail Address:</label>
-									<input type="email" id="email" name="email" class="form-control" placeholder="Enter your E-mail Address" v-model="email">
-								</div>
-								<div class="form-group">
-									<label for="password" class="control-label">Password:</label>
-									<input type="password" id="password" name="password" class="form-control" placeholder="Enter your Password" v-model="password">
-								</div>
-							</div>
-							<div class="panel-footer text-right">
-								<router-link to="/login" class="pull-left">Already have an account?</router-link>
-								<button type="submit" class="btn btn-md btn-primary">
-									Create an Account
-								</button>
-							</div>
-						</form>
+	<div id="register">
+		<form class="box" id="register-form" @submit.prevent="loginUser">
+			<h3 class="title is-3">Create an Account</h3>
+			<b-field label="E-mail Address:">
+			    <b-input placeholder="Enter your E-mail Address" v-model="email"></b-input>
+			</b-field>
+			<b-field label="Password">
+			    <b-input type="password"
+			        placeholder="Enter your Password" 
+			        v-model="password"
+			        password-reveal>
+			    </b-input>
+			</b-field>
+			<div class="block">
+				<b-field label="Re-enter Password">
+				    <b-input type="password"
+				        placeholder="Re-enter your Password" 
+				        v-model="password_confirmation"
+				        password-reveal>
+				    </b-input>
+				</b-field>
+			</div>
+			<div class="level">
+				<div class="level-left">
+					<div class="level-item">
+						<router-link to="/login">Already have an account?</router-link>	
+					</div>
+				</div>
+				<div class="level-right">
+					<div class="level-item">
+						<button type="submit" class="button is-primary">
+							Register
+						</button>
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </template>
 
 <style lang="scss" scoped>
-	#register{
+	#register-form{
 		margin-top: 80px;
 	}
 </style>

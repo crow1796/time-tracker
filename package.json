@@ -19,8 +19,14 @@
     "vue": "^2.1.10"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
+    "buefy": "^0.4.2",
+    "bulma": "^0.4.2",
+    "easytimer": "^1.1.1",
+    "material-icons": "^0.1.0",
     "nprogress": "^0.2.0",
-    "vuex": "^2.3.1",
-    "vue-router": "^2.6.0"
+    "vue-interval": "^0.1.1",
+    "vue-router": "^2.6.0",
+    "vuex": "^2.3.1"
   }
 }
