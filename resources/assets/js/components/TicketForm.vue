@@ -19,6 +19,14 @@
 				selectedIteration: null
 			};
 		},
+		methods: {
+			selectProject(option){
+				this.selectedProject = option;
+			},
+			selectIteration(option){
+				this.selectedIteration = option;
+			}
+		},
 		watch: {
 			'ticket.title'(to, from){
 				this.ticket.branch_name = '{Ticket #}_' + (to.trim().toLowerCase()).replace(/\W/g, '_');
@@ -35,14 +43,14 @@
 			    <b-input placeholder="Enter Ticket Title" v-model="ticket.title"></b-input>
 			</b-field>
 			<b-field label="Description:">
-			    <b-input type="textarea" v-model="ticket.description"></b-input>
+			    <b-input placeholder="Enter Iteration Description" type="textarea" v-model="ticket.description"></b-input>
 			</b-field>
 			<b-field label="Project:">
 				<b-autocomplete
 				    v-model="projectName"
 				    placeholder="Select a Project"
 				    :data="filteredProjectArray"
-				    @select="option => selectedProject = option">
+				    @select="selectProject">
 				</b-autocomplete>
 			</b-field>
 			<b-field label="Iteration:">
@@ -50,12 +58,11 @@
 				    v-model="iterationName"
 				    placeholder="Select a Iteration"
 				    :data="filteredIterationArray"
-				    @select="option => selectedIteration = option">
+				    @select="selectIteration">
 				</b-autocomplete>
 			</b-field>
 			<div class="field">
 			    <b-checkbox>Create Asana Task</b-checkbox>
-			    <b-checkbox>Create Git Branch</b-checkbox>
 			</div>
 			<div class="has-text-right">
 				<button type="submit" class="button is-primary">

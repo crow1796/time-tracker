@@ -110,3 +110,7 @@
 	border-top-color: #7957D5;
 	border-left-color: #7957D5;
 }
+
+.checkbox[disabled]{
+	opacity: 1 !important;
+}

@@ -11,7 +11,7 @@
 </script>
 
 <template>
-	<div id="iterations">
+	<div id="tasks">
 		<div class="tasks">
 			<iteration-table></iteration-table>
 		</div>

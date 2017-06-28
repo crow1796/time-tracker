@@ -44,7 +44,7 @@
 							<img src="http://bulma.io/images/bulma-logo.png" alt="Bulma logo">
 						</a> -->
 						<router-link to="/" class="nav-item is-tab is-hidden-mobile" exact-active-class="is-active">Dashboard</router-link>
-						<router-link to="/iterations" class="nav-item is-tab is-hidden-mobile" exact-active-class="is-active">Iterations</router-link>
+						<router-link to="/tasks" class="nav-item is-tab is-hidden-mobile" exact-active-class="is-active">Tasks</router-link>
 						<router-link to="/projects" class="nav-item is-tab is-hidden-mobile" exact-active-class="is-active">Projects</router-link>
 						<router-link to="/reports" class="nav-item is-tab is-hidden-mobile" exact-active-class="is-active">Reports</router-link>
 						<router-link to="/team" class="nav-item is-tab is-hidden-mobile" exact-active-class="is-active">Team</router-link>

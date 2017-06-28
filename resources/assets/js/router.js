@@ -4,8 +4,9 @@ import Home from './views/pages/Home.vue';
 import Login from './views/pages/Login.vue';
 import Register from './views/pages/Register.vue';
 import ForgotPassword from './views/pages/ForgotPassword.vue';
-import Iterations from './views/app_pages/Iterations.vue';
+import Tasks from './views/app_pages/Tasks.vue';
 import Projects from './views/app_pages/Projects.vue';
+import Team from './views/app_pages/Team.vue';
 import Page404 from './views/pages/404.vue';
 import Middlewares from './middlewares';
 
@@ -14,8 +15,16 @@ const routes = [
 	{ path: '/login', component: Login, beforeEnter: Middlewares.redirectIfAuthenticated },
 	{ path: '/register', component: Register, beforeEnter: Middlewares.redirectIfAuthenticated },
 	{ path: '/forgot-password', component: ForgotPassword, beforeEnter: Middlewares.redirectIfAuthenticated },
-	{ path: '/iterations', component: Iterations, beforeEnter: Middlewares.redirectIfNotAuth },
+	{
+		path: '/tasks', 
+		component: Tasks, 
+		beforeEnter: Middlewares.redirectIfNotAuth,
+		children: [
+			{ path: '/tasks/:task', component: Tasks }
+		]
+	},
 	{ path: '/projects', component: Projects, beforeEnter: Middlewares.redirectIfNotAuth },
+	{ path: '/team', component: Team, beforeEnter: Middlewares.redirectIfNotAuth },
 	{ path: '/404', component: Page404 },
 	{ path: '*', redirect: '/404' }
 ];

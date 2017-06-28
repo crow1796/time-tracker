@@ -1,26 +1,25 @@
 <script>
 	import TicketForm from './TicketForm.vue';
+	import TaskDetails from './TaskDetails';
 	export default {
 		created(){
-			_.map(this.tableData, (task) => {
-				if(!task.timerModel){
-					task.task.status = 'NOT YET STARTED';
-				}
-			});
+			if(this.$route.params.task){
+				this.taskDetails = true;
+			}
 		},
 		data(){
 			return {
 				tableData: [
-		            {"id":1, "ticket_id":"202901", "task":{"title": "Task #1", "description": "Task Desc #1", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":2, "ticket_id":"202902", "task":{"title": "Task #2", "description": "Task Desc #2", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":3, "ticket_id":"202903", "task":{"title": "Task #3", "description": "Task Desc #3", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":9, "ticket_id":"202904", "task":{"title": "Task #4", "description": "Task Desc #4", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":5, "ticket_id":"202905", "task":{"title": "Task #5", "description": "Task Desc #5", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":6, "ticket_id":"202906", "task":{"title": "Task #6", "description": "Task Desc #6", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":7, "ticket_id":"202907", "task":{"title": "Task #7", "description": "Task Desc #7", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":8, "ticket_id":"202908", "task":{"title": "Task #8", "description": "Task Desc #8", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":9, "ticket_id":"202909", "task":{"title": "Task #9", "description": "Task Desc #9", status: null}, timer: null, timerModel: null, selected: false},
-		            {"id":10, "ticket_id":"202910", "task":{"title": "Task #10", "description": "Task Desc #10", status: null}, timer: null, timerModel: null, selected: false}
+		            {"id":1, "ticket_id":"202901", "task":{"title": "Task #1", "description": "Task Desc #1", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":2, "ticket_id":"202902", "task":{"title": "Task #2", "description": "Task Desc #2", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":3, "ticket_id":"202903", "task":{"title": "Task #3", "description": "Task Desc #3", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":9, "ticket_id":"202904", "task":{"title": "Task #4", "description": "Task Desc #4", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":5, "ticket_id":"202905", "task":{"title": "Task #5", "description": "Task Desc #5", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":6, "ticket_id":"202906", "task":{"title": "Task #6", "description": "Task Desc #6", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":7, "ticket_id":"202907", "task":{"title": "Task #7", "description": "Task Desc #7", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":8, "ticket_id":"202908", "task":{"title": "Task #8", "description": "Task Desc #8", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":9, "ticket_id":"202909", "task":{"title": "Task #9", "description": "Task Desc #9", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false},
+		            {"id":10, "ticket_id":"202910", "task":{"title": "Task #10", "description": "Task Desc #10", status: 'NOT YET STARTED'}, timer: null, timerModel: null, selected: false}
 		        ],
 				checkedRows: [],
 				isBordered: false,
@@ -33,16 +32,19 @@
 				isPaginationSimple: false,
 				perPage: 10,
 				iterationTitle: null,
-				filteredDataArray: [],
-				selectedIteration: null,
+				projectTitle: null,
+				filteredProjectArray: [],
+				filteredIterationArray: [],
 				ticketFormActive: false,
 				TicketForm,
+				TaskDetails,
 				filter: {
 					project: null,
 					iteration: null,
 					status: '',
 					keyword: null
-				}
+				},
+				taskDetails: false
 			};
 		},
 		methods: {
@@ -73,6 +75,24 @@
 			},
 			__taskStatusIs(taskStatus, status){
 				return _.includes(!_.isArray(status) ? [status] : status, taskStatus);
+			},
+			selectProject(option){
+				this.filter.project = option;
+			},
+			selectIteration(option){
+				this.filter.iteration = option;
+			},
+			taskDetailsClosed(){
+				this.$router.replace(`/tasks`)
+			}
+		},
+		watch: {
+			'$route.params.task'(to, from){
+				if(to){
+					this.taskDetails = true;
+					return true;
+				}
+				this.taskDetails = false;
 			}
 		}
 	}
@@ -105,19 +125,26 @@
 		    :width="680">
 		</b-modal>
 
+		<b-modal
+		    :active.sync="taskDetails"
+		    :component="TaskDetails"
+		    :width="680"
+		    @close="taskDetailsClosed">
+		</b-modal>
+
 		<div class="block filter">
     		<div class="field is-grouped">
     			<b-autocomplete
-    			    v-model="iterationTitle"
+    			    v-model="projectTitle"
     			    placeholder="Select a Project"
-    			    :data="filteredDataArray"
-    			    @select="option => filter.project = option">
+    			    :data="filteredProjectArray"
+    			    @select="selectProject">
     			</b-autocomplete>
     			<b-autocomplete
     			    v-model="iterationTitle"
     			    placeholder="Select an Iteration"
-    			    :data="filteredDataArray"
-    			    @select="option => filter.iteration = option">
+    			    :data="filteredIterationArray"
+    			    @select="selectIteration">
     			</b-autocomplete>
     			<b-select placeholder="Filter By Status" v-model="filter.status">
 	    			<option value="">All</option>
@@ -153,7 +180,9 @@
 
 		    <template scope="props">
 		        <b-table-column field="ticket_id" label="Ticket ID" sortable>
-		            {{ props.row.ticket_id }}
+		            <router-link :to="'/tasks/' + props.row.ticket_id" @click.prevent="showTaskDetails(props.row.ticket_id)">
+		            	{{ props.row.ticket_id }}
+		            </router-link>
 		        </b-table-column>
 
 		        <b-table-column field="task.title" label="Title" sortable>
